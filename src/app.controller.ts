@@ -7,7 +7,7 @@ import { S3 } from './s3';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Post('whole')
+  @Post()
   async getHello(@Req() req: any): Promise<void> {
     const bb = busboy({ headers: req.headers });
     bb.on('file', (name, file, info) => {
