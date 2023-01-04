@@ -1,14 +1,16 @@
-import { Controller, Post, Req } from '@nestjs/common';
+import { Controller, Post, Req, Ip } from '@nestjs/common';
 import * as busboy from 'busboy';
 import { AppService } from './app.service';
 import { S3 } from './s3';
+import { checkClientIpAddress } from './utils';
 
 @Controller('upload-file')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Post()
-  async getHello(@Req() req: any): Promise<void> {
+  async getHello(@Req() req, @Ip() ip): Promise<void> {
+    // await checkClientIpAddress(ip);
     const bb = busboy({ headers: req.headers });
     bb.on('file', (name, file, info) => {
       const { filename, encoding, mimeType } = info;
